@@ -78,7 +78,7 @@ open class CMContainer : NSObject, CMContainerProtocol {
     }
 
     open func put(_ object: AnyObject, p: Protocol) {
-        let type: AnyClass = self.registrationMap.isProtocolRegistered(p) ? self.registrationMap.registrationForProtocol(p)!.returnedClass : type(of: object)
+        let type: AnyClass = self.registrationMap.isProtocolRegistered(p) ? self.registrationMap.registrationForProtocol(p)!.returnedClass : Swift.type(of: object)
 
         self.put(object, asType: type)
     }
@@ -196,7 +196,7 @@ open class CMContainer : NSObject, CMContainerProtocol {
         
         let matches = regex.matches(in: typeString, options: .withTransparentBounds, range: NSMakeRange(0, typeString.characters.count))
         if let match = matches.first {
-            let range = match.rangeAt(1)
+            let range = match.range(at: 1)
             return (typeString as NSString).substring(with: range)
         }
         

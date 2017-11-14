@@ -26,7 +26,7 @@ open class CMBundleIntrospector {
         let capacity = Int(expectedClassCount)
         
         let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: capacity)
-        let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
+        let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass>(allClasses)
         let actualClassCount:Int32 = objc_getClassList(autoreleasingAllClasses, expectedClassCount)
         
         var classes = [AnyClass]()

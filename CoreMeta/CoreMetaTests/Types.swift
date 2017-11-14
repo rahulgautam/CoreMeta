@@ -18,19 +18,19 @@ class Rose : NSObject {}
 
 class Trout : NSObject, Fish {}
 class Shark : NSObject {
-    var name:String?
+    @objc var name:String?
 }
 class Whale : NSObject {}
 class Turtle : NSObject {}
 
 class Ocean : NSObject {
-    var fish: Fish?
-    var shark : Shark?
-    var whale : Whale?
+    @objc var fish: Fish?
+    @objc var shark : Shark?
+    @objc var whale : Whale?
 
-    var depth = 12.5
+    @objc var depth = 12.5
 
-    fileprivate(set) var turtle : Turtle?
+    @objc fileprivate(set) var turtle : Turtle?
 }
 
 class Pond: Ocean {
@@ -39,7 +39,7 @@ class Pond: Ocean {
 //******************
 
 class Pizza : NSObject, CMContainerAutoRegister {
-    var name:String?
+    @objc var name:String?
 
     class func cache() -> Bool {
         return true
@@ -51,16 +51,16 @@ class Pizza : NSObject, CMContainerAutoRegister {
 }
 
 class Cake : NSObject {
-    var flavor:String?
-    var color:String?
-    var filling:String?
-    var icing = false
+    @objc var flavor:String?
+    @objc var color:String?
+    @objc var filling:String?
+    @objc var icing = false
 
     override init() {
         super.init()
     }
 
-    convenience init(flavor:String?, color:String?, icing: Bool, filling:String?) {
+    @objc convenience init(flavor:String?, color:String?, icing: Bool, filling:String?) {
         self.init()
 
         self.flavor = flavor

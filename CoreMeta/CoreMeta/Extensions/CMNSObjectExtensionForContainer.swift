@@ -22,7 +22,7 @@ public extension NSObject {
     // Creation
     //**********
     
-    public class func objectForType(_ t:AnyClass) -> NSObject {
+    @objc public class func objectForType(_ t:AnyClass) -> NSObject {
         return CMStaticContainer.container.objectForType(t)
     }
 
@@ -30,11 +30,11 @@ public extension NSObject {
         return CMStaticContainer.container.objectForProtocol(p) as? P
     }
 
-    public func inject() {
+    @objc public func inject() {
         CMStaticContainer.container.inject(self, asType: type(of: self))
     }
 
-    public func injectAsType(_ asType: AnyClass) {
+    @objc public func injectAsType(_ asType: AnyClass) {
         CMStaticContainer.container.inject(self, asType: asType)
     }
 
@@ -42,15 +42,15 @@ public extension NSObject {
     // Storage
     //*********
 
-    public func put() {
+    @objc public func put() {
         CMStaticContainer.container.put(self)
     }
 
-    public func putAsType(_ asType: AnyClass) {
+    @objc public func putAsType(_ asType: AnyClass) {
         CMStaticContainer.container.put(self, asType: asType)
     }
 
-    public func putAsProtocol(_ p: Protocol) {
+    @objc public func putAsProtocol(_ p: Protocol) {
         CMStaticContainer.container.put(self, p: p)
     }
 
@@ -58,23 +58,23 @@ public extension NSObject {
     // Registration
     //**************
 
-    public class func register() {
+    @objc public class func register() {
         CMStaticContainer.container.registerClass(self)
     }
 
-    public class func register(andCache cache: Bool) {
+    @objc public class func register(andCache cache: Bool) {
         CMStaticContainer.container.registerClass(self, cache: cache)
     }
 
-    public class func register(andCache cache: Bool, onCreate: @escaping (NSObject) -> Void) {
+    @objc public class func register(andCache cache: Bool, onCreate: @escaping (NSObject) -> Void) {
         CMStaticContainer.container.registerClass(self, cache: cache, onCreate: onCreate)
     }
 
-    public class func registerClassAsClass(_ replacedClass: AnyClass) {
+    @objc public class func registerClassAsClass(_ replacedClass: AnyClass) {
         CMStaticContainer.container.registerClassAsClass(self, replacedClass: replacedClass)
     }
 
-    public class func registerClassAsProtocol(_ p: Protocol) {
+    @objc public class func registerClassAsProtocol(_ p: Protocol) {
         CMStaticContainer.container.registerClassAsProtocol(self, p: p)
     }
 

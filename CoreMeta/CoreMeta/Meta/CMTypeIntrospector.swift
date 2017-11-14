@@ -26,18 +26,18 @@ open class CMTypeIntrospector {
     open func properties() -> Array<CMPropertyInfo> {
         // get properties for this class
         var count = UInt32()
-        let properties:UnsafeMutablePointer<objc_property_t?>! = class_copyPropertyList(type, &count)
+        let properties:UnsafeMutablePointer<objc_property_t>! = class_copyPropertyList(type, &count)
 
         var propertyInfos = Array<CMPropertyInfo>()
         for i in 0..<Int(count) {
-            let property:objc_property_t = properties[i]!
+            let property:objc_property_t = properties[i]
 
             guard let propertyName = NSString(utf8String: property_getName(property)) as? String else {
                 debugPrint("Couldn't unwrap property name for \(property)")
                 continue
             }
 
-            guard let infoString = NSString(utf8String: property_getAttributes(property)) as? String else {
+            guard let infoString = NSString(utf8String: property_getAttributes(property)!) as? String else {
                 debugPrint("Couldn't get property attributes for \(property)")
                 continue
             }
@@ -51,7 +51,7 @@ open class CMTypeIntrospector {
         free(properties)
 
         // climb chain
-        let superClass:AnyClass = class_getSuperclass(type)
+        let superClass:AnyClass = class_getSuperclass(type)!
         if (superClass != NSObject.self) {
             propertyInfos.append(contentsOf: CMTypeIntrospector(t: superClass).properties())
         }

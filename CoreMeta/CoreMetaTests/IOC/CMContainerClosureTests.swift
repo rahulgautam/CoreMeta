@@ -18,11 +18,11 @@ protocol RegisteredProtocol {
 }
 
 class InjectedClass : NSObject {
-    var generator : (() -> RegisteredClass)!
+    @objc var generator : (() -> RegisteredClass)!
 }
 
 class InjectedProtocolClass : NSObject {
-    var generator : (() -> RegisteredProtocol)!
+    @objc var generator : (() -> RegisteredProtocol)!
 }
 
 class CMGeneratorTests : XCTestCase {
