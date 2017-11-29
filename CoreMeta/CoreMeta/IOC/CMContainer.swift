@@ -194,7 +194,7 @@ open class CMContainer : NSObject, CMContainerProtocol {
         //  "() -> Swift.String"
         let regex = try! NSRegularExpression(pattern: ".*\\(+\\)+ -> ([^>]*)", options: NSRegularExpression.Options(rawValue: 0))
         
-        let matches = regex.matches(in: typeString, options: .withTransparentBounds, range: NSMakeRange(0, typeString.characters.count))
+        let matches = regex.matches(in: typeString, options: .withTransparentBounds, range: NSMakeRange(0, typeString.count))
         if let match = matches.first {
             let range = match.range(at: 1)
             return (typeString as NSString).substring(with: range)

@@ -32,12 +32,12 @@ open class CMTypeIntrospector {
         for i in 0..<Int(count) {
             let property:objc_property_t = properties[i]
 
-            guard let propertyName = NSString(utf8String: property_getName(property)) as? String else {
+            guard let propertyName = NSString(utf8String: property_getName(property)) as String? else {
                 debugPrint("Couldn't unwrap property name for \(property)")
                 continue
             }
 
-            guard let infoString = NSString(utf8String: property_getAttributes(property)!) as? String else {
+            guard let infoString = NSString(utf8String: property_getAttributes(property)!) as String? else {
                 debugPrint("Couldn't get property attributes for \(property)")
                 continue
             }
@@ -72,23 +72,24 @@ open class CMTypeIntrospector {
     }
 
     fileprivate func parseValueTypeInfo(_ typename: String) -> CMTypeInfo {
-        let key = typename.substring(to: typename.characters.index(typename.startIndex, offsetBy: 2))
+        let key = String(typename[..<typename.index(typename.startIndex, offsetBy: 2)])
         let name = valueTypeMap[key]!
 
         return CMTypeInfo(name: name, isKnown: true, isValueType: true, isProtocol: false)
     }
 
     fileprivate func parseProtocolInfo(_ typename: String) -> CMTypeInfo {
-        let name = typename.substring(with: (typename.characters.index(typename.startIndex, offsetBy: 4) ..< typename.characters.index(typename.endIndex, offsetBy: -2)))
+        
+        let name = String(typename[typename.index(typename.startIndex, offsetBy: 4)..<typename.index(typename.endIndex, offsetBy: -2)])
 
         return CMTypeInfo(name: name, isKnown: true, isValueType: false, isProtocol: true)
     }
 
     fileprivate func parseRefTypeInfo(_ typename: String) -> CMTypeInfo {
-        guard typename.characters.count > 3
+        guard typename.count > 3
             else { return CMTypeInfo(name: typename, isKnown: false, isValueType: false, isProtocol: false) }
         
-        let name = typename.substring(with: (typename.characters.index(typename.startIndex, offsetBy: 3) ..< typename.characters.index(typename.endIndex, offsetBy: -1)));
+        let name = String(typename[typename.index(typename.startIndex, offsetBy: 3)..<typename.index(typename.endIndex, offsetBy: -1)])
 
         return CMTypeInfo(name: name, isKnown: true, isValueType: false, isProtocol: false)
     }
@@ -114,6 +115,6 @@ open class CMTypeIntrospector {
     }
 
     fileprivate func isProtocol(_ typename: String) -> Bool {
-        return typename.characters.count > 3 && typename.substring(from: typename.characters.index(typename.startIndex, offsetBy: 3)).hasPrefix("<")
+        return typename.count > 3 &&  String(typename[typename.index(typename.startIndex, offsetBy: 3)...]).hasPrefix("<")
     }
 }
